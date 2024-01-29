@@ -29,19 +29,19 @@ namespace EmployeeAttendance
 
         {
             // Check if all fields are filled
-            if (string.IsNullOrWhiteSpace(richTextBox1.Text) ||
-                string.IsNullOrWhiteSpace(richTextBox2.Text) ||
-                string.IsNullOrWhiteSpace(richTextBox3.Text) ||
-                string.IsNullOrWhiteSpace(richTextBox4.Text) ||
-                string.IsNullOrWhiteSpace(richTextBox5.Text) ||
-                string.IsNullOrWhiteSpace(richTextBox6.Text))
+            if (string.IsNullOrWhiteSpace(firstNameTextbox.Text) ||
+                string.IsNullOrWhiteSpace(lastnameTextbox.Text) ||
+                string.IsNullOrWhiteSpace(stationTextbox.Text) ||
+                string.IsNullOrWhiteSpace(departmentTextboxd.Text) ||
+                string.IsNullOrWhiteSpace(usernameTextbox.Text) ||
+                string.IsNullOrWhiteSpace(emailTextbox.Text))
             {
                 MessageBox.Show("Please fill in all fields.", "Incomplete Form", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Check if the email has the correct domain
-            string email = richTextBox6.Text.Trim();
+            string email = emailTextbox.Text.Trim();
             if (!email.EndsWith("@mra.mw"))
             {
                 MessageBox.Show("Invalid email domain. Please use an email with '@mra.mw'.", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -60,7 +60,7 @@ namespace EmployeeAttendance
         private bool ValidateForm()
         {
             // Perform validation checks for all fields
-            if (string.IsNullOrWhiteSpace(richTextBox1.Text))
+            if (string.IsNullOrWhiteSpace(firstNameTextbox.Text))
             {
                 MessageBox.Show("First Name cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -82,12 +82,12 @@ namespace EmployeeAttendance
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.richTextBox6 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox5 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox4 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.emailTextbox = new System.Windows.Forms.RichTextBox();
+            this.usernameTextbox = new System.Windows.Forms.RichTextBox();
+            this.departmentTextboxd = new System.Windows.Forms.RichTextBox();
+            this.stationTextbox = new System.Windows.Forms.RichTextBox();
+            this.lastnameTextbox = new System.Windows.Forms.RichTextBox();
+            this.firstNameTextbox = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -104,12 +104,12 @@ namespace EmployeeAttendance
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.richTextBox6);
-            this.panel1.Controls.Add(this.richTextBox5);
-            this.panel1.Controls.Add(this.richTextBox4);
-            this.panel1.Controls.Add(this.richTextBox3);
-            this.panel1.Controls.Add(this.richTextBox2);
-            this.panel1.Controls.Add(this.richTextBox1);
+            this.panel1.Controls.Add(this.emailTextbox);
+            this.panel1.Controls.Add(this.usernameTextbox);
+            this.panel1.Controls.Add(this.departmentTextboxd);
+            this.panel1.Controls.Add(this.stationTextbox);
+            this.panel1.Controls.Add(this.lastnameTextbox);
+            this.panel1.Controls.Add(this.firstNameTextbox);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
@@ -120,6 +120,7 @@ namespace EmployeeAttendance
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(346, 503);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // button1
             // 
@@ -130,7 +131,6 @@ namespace EmployeeAttendance
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(184, 58);
             this.button1.TabIndex = 13;
-            this.button1.Text = "Next";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
@@ -144,53 +144,56 @@ namespace EmployeeAttendance
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
             // 
-            // richTextBox6
+            // emailTextbox
             // 
-            this.richTextBox6.Location = new System.Drawing.Point(38, 381);
-            this.richTextBox6.Name = "richTextBox6";
-            this.richTextBox6.Size = new System.Drawing.Size(249, 27);
-            this.richTextBox6.TabIndex = 11;
-            this.richTextBox6.Text = "";
+            this.emailTextbox.Location = new System.Drawing.Point(38, 381);
+            this.emailTextbox.Name = "emailTextbox";
+            this.emailTextbox.Size = new System.Drawing.Size(249, 27);
+            this.emailTextbox.TabIndex = 11;
+            this.emailTextbox.Text = "";
+            this.emailTextbox.TextChanged += new System.EventHandler(this.richTextBox6_TextChanged);
             // 
-            // richTextBox5
+            // usernameTextbox
             // 
-            this.richTextBox5.Location = new System.Drawing.Point(38, 315);
-            this.richTextBox5.Name = "richTextBox5";
-            this.richTextBox5.Size = new System.Drawing.Size(249, 27);
-            this.richTextBox5.TabIndex = 10;
-            this.richTextBox5.Text = "";
+            this.usernameTextbox.Location = new System.Drawing.Point(38, 315);
+            this.usernameTextbox.Name = "usernameTextbox";
+            this.usernameTextbox.Size = new System.Drawing.Size(249, 27);
+            this.usernameTextbox.TabIndex = 10;
+            this.usernameTextbox.Text = "";
             // 
-            // richTextBox4
+            // departmentTextboxd
             // 
-            this.richTextBox4.Location = new System.Drawing.Point(38, 266);
-            this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(249, 27);
-            this.richTextBox4.TabIndex = 9;
-            this.richTextBox4.Text = "";
+            this.departmentTextboxd.Location = new System.Drawing.Point(38, 266);
+            this.departmentTextboxd.Name = "departmentTextboxd";
+            this.departmentTextboxd.Size = new System.Drawing.Size(249, 27);
+            this.departmentTextboxd.TabIndex = 9;
+            this.departmentTextboxd.Text = "";
+            this.departmentTextboxd.TextChanged += new System.EventHandler(this.richTextBox4_TextChanged);
             // 
-            // richTextBox3
+            // stationTextbox
             // 
-            this.richTextBox3.Location = new System.Drawing.Point(38, 200);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(249, 27);
-            this.richTextBox3.TabIndex = 8;
-            this.richTextBox3.Text = "";
+            this.stationTextbox.Location = new System.Drawing.Point(38, 200);
+            this.stationTextbox.Name = "stationTextbox";
+            this.stationTextbox.Size = new System.Drawing.Size(249, 27);
+            this.stationTextbox.TabIndex = 8;
+            this.stationTextbox.Text = "";
             // 
-            // richTextBox2
+            // lastnameTextbox
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(38, 151);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(249, 27);
-            this.richTextBox2.TabIndex = 7;
-            this.richTextBox2.Text = "";
+            this.lastnameTextbox.Location = new System.Drawing.Point(38, 151);
+            this.lastnameTextbox.Name = "lastnameTextbox";
+            this.lastnameTextbox.Size = new System.Drawing.Size(249, 27);
+            this.lastnameTextbox.TabIndex = 7;
+            this.lastnameTextbox.Text = "";
             // 
-            // richTextBox1
+            // firstNameTextbox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(38, 97);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(249, 27);
-            this.richTextBox1.TabIndex = 6;
-            this.richTextBox1.Text = "";
+            this.firstNameTextbox.Location = new System.Drawing.Point(38, 97);
+            this.firstNameTextbox.Name = "firstNameTextbox";
+            this.firstNameTextbox.Size = new System.Drawing.Size(249, 27);
+            this.firstNameTextbox.TabIndex = 6;
+            this.firstNameTextbox.Text = "";
+            this.firstNameTextbox.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // label6
             // 
@@ -266,6 +269,7 @@ namespace EmployeeAttendance
             this.Controls.Add(this.panel1);
             this.Name = "RegisterForm";
             this.Text = "RegisterForm";
+            this.Load += new System.EventHandler(this.RegisterForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -283,12 +287,12 @@ namespace EmployeeAttendance
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.RichTextBox richTextBox6;
-        private System.Windows.Forms.RichTextBox richTextBox5;
-        private System.Windows.Forms.RichTextBox richTextBox4;
-        private System.Windows.Forms.RichTextBox richTextBox3;
-        private System.Windows.Forms.RichTextBox richTextBox2;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox emailTextbox;
+        private System.Windows.Forms.RichTextBox usernameTextbox;
+        private System.Windows.Forms.RichTextBox departmentTextboxd;
+        private System.Windows.Forms.RichTextBox stationTextbox;
+        private System.Windows.Forms.RichTextBox lastnameTextbox;
+        private System.Windows.Forms.RichTextBox firstNameTextbox;
         private System.Windows.Forms.Button button1;
     }
 }

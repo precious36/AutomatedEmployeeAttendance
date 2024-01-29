@@ -17,6 +17,30 @@ namespace EmployeeAttendance
         {
             InitializeComponent();
         }
+        public string Authentification(string username, string password)
+        {
+            employee_attendanceEntities2 db = new employee_attendanceEntities2();
+            var matches = db.Administrators.Where(x => x.username == username && x.password == password);
+
+            if (matches.Count() > 0)
+            {
+                // Create an instance of the AnotherForm
+                registration_table regtable = new registration_table();
+
+                // Show the AnotherForm
+                regtable.Show();
+
+                // If you want to hide the current form
+                this.Hide();
+
+                // Return a success message or status
+                return "Authentication successful";
+            }
+
+            // Return a failure message or status
+            return "Authentication failed";
+        }
+
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -30,20 +54,25 @@ namespace EmployeeAttendance
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Create an instance of the AnotherForm
-           // homepageForm1 anotherForm = new homepageForm1();
+            String username = usernameTextedBox.Text;
+            String password = passwordTextBox.Text;
 
-            // Show the AnotherForm
-          //  anotherForm.Show();
-
-            // If you want to hide the current form
-            this.Hide();
-
+            Authentification(username, password);
         }
-
+        
         private void SignXtraForm1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void passwordTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+                          
         }
     }
 }

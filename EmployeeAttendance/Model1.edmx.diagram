@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a669e8c5a8b84363b24465ab3ee94cbf" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.AttendanceStatu" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Department" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EmployeeAttendance" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EmployeeDetail" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Station" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Administrator" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EmployeeFingerprint" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_EmployeeAttendance_AttendanceStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EmployeeAttendance_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EmployeeAttendance_EmployeeDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EmployeeAttendance_Station" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EmployeeFingerprints_EmployeeAttendance" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

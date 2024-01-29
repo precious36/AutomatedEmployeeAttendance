@@ -22,7 +22,7 @@ namespace EmployeeAttendance
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new enrollFingers());
+            Application.Run(new SignXtraForm1());
         }
     }
 }

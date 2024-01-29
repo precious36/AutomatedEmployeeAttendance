@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'employee attendance.dbo.Administrator' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AttendanceStatus">
+          <Key>
+            <PropertyRef Name="check_in" />
+          </Key>
+          <Property Name="status_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="status_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="check_in" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="ID" Type="int" />
+          <Property Name="department_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="department_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="station" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeAttendance">
+          <Key>
+            <PropertyRef Name="employee_number" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="employee_number" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="check_in" Type="time" Precision="7" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="department_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="station_ID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeDetails">
+          <Key>
+            <PropertyRef Name="employee_number" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="employee_number" Type="int" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="department" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="station" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fingerprint" Type="varbinary(max)" Nullable="false" />
+          <Property Name="signature" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'employee attendance.dbo.EmployeeFingerprints' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EmployeeFingerprints">
+          <Key>
+            <PropertyRef Name="employee_number" />
+            <PropertyRef Name="thumb" />
+            <PropertyRef Name="index_finger" />
+            <PropertyRef Name="middle_finger" />
+            <PropertyRef Name="ring_finger" />
+            <PropertyRef Name="little_finger" />
+          </Key>
+          <Property Name="employee_number" Type="int" Nullable="false" />
+          <Property Name="thumb" Type="varbinary(max)" Nullable="false" />
+          <Property Name="index_finger" Type="varbinary(max)" Nullable="false" />
+          <Property Name="middle_finger" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ring_finger" Type="varbinary(max)" Nullable="false" />
+          <Property Name="little_finger" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="station_ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="station_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="station_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="employee_number" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_EmployeeAttendance_AttendanceStatus">
+          <End Role="AttendanceStatus" Type="Self.AttendanceStatus" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceStatus">
+              <PropertyRef Name="check_in" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="check_in" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAttendance_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="department_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAttendance_EmployeeDetails">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="employee_number" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="employee_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAttendance_Station">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="station_ID" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="station_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeFingerprints_EmployeeAttendance">
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="1" />
+          <End Role="EmployeeFingerprints" Type="Self.EmployeeFingerprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeAttendance">
+              <PropertyRef Name="employee_number" />
+            </Principal>
+            <Dependent Role="EmployeeFingerprints">
+              <PropertyRef Name="employee_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="AttendanceStatus" EntityType="Self.AttendanceStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeAttendance" EntityType="Self.EmployeeAttendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Station" EntityType="Self.Station" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Administrator" EntityType="Self.Administrator" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Administrator].[username] AS [username], 
+    [Administrator].[password] AS [password], 
+    [Administrator].[role] AS [role]
+    FROM [dbo].[Administrator] AS [Administrator]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EmployeeFingerprints" EntityType="Self.EmployeeFingerprints" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EmployeeFingerprints].[employee_number] AS [employee_number], 
+    [EmployeeFingerprints].[thumb] AS [thumb], 
+    [EmployeeFingerprints].[index_finger] AS [index_finger], 
+    [EmployeeFingerprints].[middle_finger] AS [middle_finger], 
+    [EmployeeFingerprints].[ring_finger] AS [ring_finger], 
+    [EmployeeFingerprints].[little_finger] AS [little_finger]
+    FROM [dbo].[EmployeeFingerprints] AS [EmployeeFingerprints]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_EmployeeAttendance_AttendanceStatus" Association="Self.FK_EmployeeAttendance_AttendanceStatus">
+            <End Role="AttendanceStatus" EntitySet="AttendanceStatus" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAttendance_Department" Association="Self.FK_EmployeeAttendance_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAttendance_EmployeeDetails" Association="Self.FK_EmployeeAttendance_EmployeeDetails">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAttendance_Station" Association="Self.FK_EmployeeAttendance_Station">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeFingerprints_EmployeeAttendance" Association="Self.FK_EmployeeFingerprints_EmployeeAttendance">
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendance" />
+            <End Role="EmployeeFingerprints" EntitySet="EmployeeFingerprints" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AttendanceStatu">
+          <Key>
+            <PropertyRef Name="check_in" />
+          </Key>
+          <Property Name="status_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="check_in" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="EmployeeAttendances" Relationship="Self.FK_EmployeeAttendance_AttendanceStatus" FromRole="AttendanceStatus" ToRole="EmployeeAttendance" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="ID" Type="Int32" />
+          <Property Name="department_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="station" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EmployeeAttendances" Relationship="Self.FK_EmployeeAttendance_Department" FromRole="Department" ToRole="EmployeeAttendance" />
+        </EntityType>
+        <EntityType Name="EmployeeAttendance">
+          <Key>
+            <PropertyRef Name="employee_number" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="employee_number" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="check_in" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="department_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="station_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AttendanceStatu" Relationship="Self.FK_EmployeeAttendance_AttendanceStatus" FromRole="EmployeeAttendance" ToRole="AttendanceStatus" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_EmployeeAttendance_Department" FromRole="EmployeeAttendance" ToRole="Department" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="Self.FK_EmployeeAttendance_EmployeeDetails" FromRole="EmployeeAttendance" ToRole="EmployeeDetails" />
+          <NavigationProperty Name="Station" Relationship="Self.FK_EmployeeAttendance_Station" FromRole="EmployeeAttendance" ToRole="Station" />
+          <NavigationProperty Name="EmployeeFingerprints" Relationship="Self.FK_EmployeeFingerprints_EmployeeAttendance" FromRole="EmployeeAttendance" ToRole="EmployeeFingerprints" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="employee_number" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="employee_number" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="station" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fingerprint" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="signature" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="EmployeeAttendance" Relationship="Self.FK_EmployeeAttendance_EmployeeDetails" FromRole="EmployeeDetails" ToRole="EmployeeAttendance" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="station_ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="station_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="station_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="employee_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EmployeeAttendances" Relationship="Self.FK_EmployeeAttendance_Station" FromRole="Station" ToRole="EmployeeAttendance" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EmployeeFingerprint">
+          <Key>
+            <PropertyRef Name="employee_number" />
+            <PropertyRef Name="thumb" />
+            <PropertyRef Name="index_finger" />
+            <PropertyRef Name="middle_finger" />
+            <PropertyRef Name="ring_finger" />
+            <PropertyRef Name="little_finger" />
+          </Key>
+          <Property Name="employee_number" Type="Int32" Nullable="false" />
+          <Property Name="thumb" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="index_finger" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="middle_finger" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ring_finger" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="little_finger" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="EmployeeAttendance" Relationship="Self.FK_EmployeeFingerprints_EmployeeAttendance" FromRole="EmployeeFingerprints" ToRole="EmployeeAttendance" />
+        </EntityType>
+        <Association Name="FK_EmployeeAttendance_AttendanceStatus">
+          <End Role="AttendanceStatus" Type="Self.AttendanceStatu" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceStatus">
+              <PropertyRef Name="check_in" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="check_in" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAttendance_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="department_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAttendance_EmployeeDetails">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="employee_number" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="employee_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAttendance_Station">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="station_ID" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="station_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeFingerprints_EmployeeAttendance">
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="1" />
+          <End Role="EmployeeFingerprints" Type="Self.EmployeeFingerprint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeAttendance">
+              <PropertyRef Name="employee_number" />
+            </Principal>
+            <Dependent Role="EmployeeFingerprints">
+              <PropertyRef Name="employee_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="employee_attendanceEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AttendanceStatus" EntityType="Self.AttendanceStatu" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="EmployeeAttendances" EntityType="Self.EmployeeAttendance" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
+          <EntitySet Name="Stations" EntityType="Self.Station" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Administrators" EntityType="Self.Administrator" />
+          <EntitySet Name="EmployeeFingerprints" EntityType="Self.EmployeeFingerprint" />
+          <AssociationSet Name="FK_EmployeeAttendance_AttendanceStatus" Association="Self.FK_EmployeeAttendance_AttendanceStatus">
+            <End Role="AttendanceStatus" EntitySet="AttendanceStatus" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAttendance_Department" Association="Self.FK_EmployeeAttendance_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAttendance_EmployeeDetails" Association="Self.FK_EmployeeAttendance_EmployeeDetails">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAttendance_Station" Association="Self.FK_EmployeeAttendance_Station">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeFingerprints_EmployeeAttendance" Association="Self.FK_EmployeeFingerprints_EmployeeAttendance">
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendances" />
+            <End Role="EmployeeFingerprints" EntitySet="EmployeeFingerprints" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="employee_attendanceEntities2">
+          <EntitySetMapping Name="AttendanceStatus">
+            <EntityTypeMapping TypeName="Model.AttendanceStatu">
+              <MappingFragment StoreEntitySet="AttendanceStatus">
+                <ScalarProperty Name="status_ID" ColumnName="status_ID" />
+                <ScalarProperty Name="status_name" ColumnName="status_name" />
+                <ScalarProperty Name="check_in" ColumnName="check_in" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="Model.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+                <ScalarProperty Name="station" ColumnName="station" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeAttendances">
+            <EntityTypeMapping TypeName="Model.EmployeeAttendance">
+              <MappingFragment StoreEntitySet="EmployeeAttendance">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="check_in" ColumnName="check_in" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="department_ID" ColumnName="department_ID" />
+                <ScalarProperty Name="station_ID" ColumnName="station_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDetails">
+            <EntityTypeMapping TypeName="Model.EmployeeDetail">
+              <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="station" ColumnName="station" />
+                <ScalarProperty Name="fingerprint" ColumnName="fingerprint" />
+                <ScalarProperty Name="signature" ColumnName="signature" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stations">
+            <EntityTypeMapping TypeName="Model.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="station_ID" ColumnName="station_ID" />
+                <ScalarProperty Name="station_name" ColumnName="station_name" />
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Administrators">
+            <EntityTypeMapping TypeName="Model.Administrator">
+              <MappingFragment StoreEntitySet="Administrator">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeFingerprints">
+            <EntityTypeMapping TypeName="Model.EmployeeFingerprint">
+              <MappingFragment StoreEntitySet="EmployeeFingerprints">
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+                <ScalarProperty Name="thumb" ColumnName="thumb" />
+                <ScalarProperty Name="index_finger" ColumnName="index_finger" />
+                <ScalarProperty Name="middle_finger" ColumnName="middle_finger" />
+                <ScalarProperty Name="ring_finger" ColumnName="ring_finger" />
+                <ScalarProperty Name="little_finger" ColumnName="little_finger" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

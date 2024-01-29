@@ -120,10 +120,10 @@ namespace EmployeeAttendance
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             // Assuming you have another form named AnotherForm
-          //  registration_form regForm = new registration_form();
+            RegisterForm regForm = new RegisterForm();
 
             // Show the new form
-          //  regForm.Show();
+           regForm.Show();
 
             // Optionally, you can hide the current form if needed
            this.Hide();
